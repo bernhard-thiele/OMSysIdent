@@ -16,10 +16,26 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/config.cmake/")
 include(GetGitRevisionDescription)
 git_describe(OMSI_VERSION_STRING --tags --abbrev=7) # --match=v*.*
 
+IF(WIN32 AND MSVC)
+  set(PLATFORM_STRING "win")
+ELSEIF(WIN32 AND MINGW)
+  set(PLATFORM_STRING "mingw")
+ELSEIF(APPLE)
+  set(PLATFORM_STRING "mac")
+ELSE()
+  set(PLATFORM_STRING "linux")
+ENDIF()
+
+# Don't allow in-source build
+IF("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
+  message(FATAL_ERROR "No in-source builds supported. Change to 'build' sub-directory and do 'cmake ..'.")
+ENDIF()
+
+message(STATUS "Platform string: ${PLATFORM_STRING}")
+
 # Default install directory
-# TODO Remove `/linux` from prefix and adapt logic accordingly
 IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/install/linux CACHE PATH "Installation prefix path" FORCE)
+  set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/install/${PLATFORM_STRING} CACHE PATH "Installation prefix path" FORCE)
 ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 # Put all output artifacts into same folder to make Windows happy (so that DLLs are found by dependent artifacts).
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin CACHE STRING "")
@@ -28,9 +44,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin CACHE STRING "")
 # Keep CACHE cleaner
 mark_as_advanced(CMAKE_RUNTIME_OUTPUT_DIRECTORY CMAKE_LIBRARY_OUTPUT_DIRECTORY CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
 
-IF(NOT PLATFORM_STRING)
-  set(PLATFORM_STRING linux)
-ENDIF()
 
 # https://bastian.rieck.ru/blog/posts/2015/ycm_cmake/
 # Ensures that CMake creates the file compile_commands.json (if desired).

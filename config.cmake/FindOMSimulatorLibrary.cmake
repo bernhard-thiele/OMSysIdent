@@ -2,12 +2,12 @@
 
 find_library(OMSimulator_LIBRARY
   NAMES OMSimulator
-  HINTS ${OMSimulator_ROOT}/lib
+  HINTS ${OMSimulator_ROOT}/lib ${OMSimulator_ROOT}/bin
 )
 
 find_library(OMTLMSimulator_LIBRARY
   NAMES omtlmsimulator
-  HINTS ${OMSimulator_ROOT}/lib
+  HINTS ${OMSimulator_ROOT}/lib ${OMSimulator_ROOT}/bin
 )
 
 if(OMSimulator_LIBRARY)
