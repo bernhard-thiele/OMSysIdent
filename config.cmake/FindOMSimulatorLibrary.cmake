@@ -11,7 +11,8 @@ find_library(OMTLMSimulator_LIBRARY
 )
 
 if(OMSimulator_LIBRARY)
-  set(OMSimulator_LIBRARYDIR ${OMSimulator_ROOT}/lib)
+  # set(OMSimulator_LIBRARYDIR ${OMSimulator_ROOT}/lib) # Linux
+  set(OMSimulator_LIBRARYDIR ${OMSimulator_ROOT}/bin) # Windows
   set(OMSimulator_INCLUDEDIR ${OMSimulator_ROOT}/include)
   message(STATUS "Found OMSimulator")
   message(STATUS "  OMSimulator_ROOT:       " ${OMSimulator_ROOT})
