@@ -149,7 +149,7 @@ OMSAPI oms_status_enu_t OMSCALL omsi_addInput(void* simodel, const char* var, co
  * @param startvalue [in] Start value of parameter.
  * @return Error status.
  */
-oms_status_enu_t omsi_addParameter(void* simodel, const char* var, double startvalue);
+OMSAPI oms_status_enu_t omsi_addParameter(void* simodel, const char* var, double startvalue);
 
 /**
  * \brief Get parameter that should be estimated.

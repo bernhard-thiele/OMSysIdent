@@ -11,16 +11,16 @@ message(STATUS "WRITING BUILD FILES FOR testsuite")
 # for showing the stdout output for all test cases, alternatively, for a specific test,
 # make test ARGS="-V -R some-specific-test"
 
-# add_executable(test_HelloWorld_cs_Fit test_HelloWorld_cs_Fit.c)
-# target_link_libraries(test_HelloWorld_cs_Fit ${OMSimulator_LIBRARY} ${CERES_LIBRARIES} OMSimulator)
-# target_include_directories(OMSysIdent PRIVATE ${OMSimulator_INCLUDEDIR})
-# add_test(NAME test_HelloWorld_cs_Fit
-#   COMMAND test_HelloWorld_cs_Fit
-#   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-#
-# add_executable(test_Lin2DimODE_cs_Fit test_Lin2DimODE_cs_Fit.cpp)
-# target_include_directories(test_Lin2DimODE_cs_Fit PRIVATE ${OMSimulator_INCLUDEDIR} ${CMAKE_SOURCE_DIR}/3rdParty/eigen/eigen)
-# target_link_libraries(test_Lin2DimODE_cs_Fit ${OMSimulator_LIBRARY} ${CERES_LIBRARIES} OMSimulator)
-# add_test(NAME test_Lin2DimODE_cs_Fit
-#   COMMAND test_Lin2DimODE_cs_Fit
-#   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+add_executable(test_HelloWorld_cs_Fit test_HelloWorld_cs_Fit.c)
+target_link_libraries(test_HelloWorld_cs_Fit PRIVATE OMSysIdent ${OMSimulator_LIBRARY} ${CERES_LIBRARIES})
+target_include_directories(test_HelloWorld_cs_Fit PRIVATE ${OMSimulator_INCLUDEDIR})
+add_test(NAME test_HelloWorld_cs_Fit
+  COMMAND test_HelloWorld_cs_Fit
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_executable(test_Lin2DimODE_cs_Fit test_Lin2DimODE_cs_Fit.cpp)
+target_include_directories(test_Lin2DimODE_cs_Fit PRIVATE ${OMSimulator_INCLUDEDIR} ${CMAKE_SOURCE_DIR}/3rdParty/eigen/eigen)
+target_link_libraries(test_Lin2DimODE_cs_Fit PRIVATE OMSysIdent ${OMSimulator_LIBRARY} ${CERES_LIBRARIES})
+add_test(NAME test_Lin2DimODE_cs_Fit
+  COMMAND test_Lin2DimODE_cs_Fit
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
